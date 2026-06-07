@@ -57,7 +57,7 @@ export const BUILDINGS: Record<BuildingType, BuildingDef> = {
     id: 'mento_bank',
     name: 'Mento Bank',
     desc: 'Stablecoin reserve that compounds colony wealth.',
-    lore: 'Mento's algorithmic stability, colonized.',
+    lore: "Mento's algorithmic stability, colonized.",
     color: '#10B981',
     accentColor: '#047857',
     shape: 'pyramid',
