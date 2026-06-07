@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@400;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-mono:  'Share Tech Mono', monospace;
+  --font-title: 'Oxanium', sans-serif;
+
+  --green:   #35D07F;
+  --gold:    #FBCC5C;
+  --purple:  #8B5CF6;
+  --cyan:    #22D3EE;
+  --pink:    #EC4899;
+  --orange:  #F59E0B;
+  --red:     #EF4444;
+  --blue:    #3B82F6;
+
+  --bg:      #070A0F;
+  --bg2:     #0B1018;
+  --panel:   rgba(8, 13, 22, 0.96);
+  --border:  rgba(53, 208, 127, 0.15);
+  --border2: rgba(255, 255, 255, 0.06);
+  --text:    #DFF0E8;
+  --text2:   rgba(223, 240, 232, 0.55);
+  --text3:   rgba(223, 240, 232, 0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-mono);
+  background:  var(--bg);
+  color:       var(--text);
+  overflow-x:  hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Selection ── */
+::selection { background: rgba(53, 208, 127, 0.25); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Game panels ── */
+.panel {
+  background:    var(--panel);
+  border:        1px solid var(--border);
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+}
+
+/* ── Neon glow utilities ── */
+.glow-green  { box-shadow: 0 0 20px rgba(53,  208, 127, 0.3); }
+.glow-cyan   { box-shadow: 0 0 20px rgba(34,  211, 238, 0.3); }
+.glow-purple { box-shadow: 0 0 20px rgba(139, 92,  246, 0.3); }
+.glow-gold   { box-shadow: 0 0 20px rgba(251, 204, 92,  0.3); }
+
+.text-glow-green { text-shadow: 0 0 12px rgba(53,  208, 127, 0.8); }
+.text-glow-cyan  { text-shadow: 0 0 12px rgba(34,  211, 238, 0.8); }
+.text-glow-gold  { text-shadow: 0 0 12px rgba(251, 204, 92,  0.8); }
+
+/* ── Resource badge ── */
+.resource-badge {
+  display:     inline-flex;
+  align-items: center;
+  gap:         4px;
+  padding:     4px 10px;
+  border:      1px solid var(--border2);
+  border-radius: 6px;
+  background:  rgba(255,255,255,0.04);
+  font-size:   13px;
+  font-family: var(--font-mono);
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  height:        6px;
+  background:    rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow:      hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ── Building card ── */
+.building-card {
+  background:    rgba(255,255,255,0.03);
+  border:        1px solid var(--border2);
+  border-radius: 8px;
+  padding:       12px;
+  transition:    border-color 0.2s, transform 0.15s;
+  cursor:        pointer;
+}
+.building-card:hover {
+  border-color: var(--border);
+  transform:    translateY(-1px);
+}
+.building-card.selected {
+  border-color: var(--green);
+  background:   rgba(53, 208, 127, 0.06);
+}
+
+/* ── CRT scanlines overlay ── */
+.crt::before {
+  content:  '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index:        1;
+}
+
+/* ── Animated gradient border ── */
+.border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.border-gradient::before {
+  content:  '';
+  position: absolute;
+  inset:    -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--green), var(--cyan), var(--purple));
+  z-index: -1;
+}
+
+/* ── Bottom sheet ── */
+.bottom-sheet {
+  position:      fixed;
+  bottom:        0; left: 0; right: 0;
+  background:    var(--panel);
+  border-top:    1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  backdrop-filter: blur(20px);
+  z-index:       40;
+  transition:    transform 0.3s ease;
+}
+
+/* ── Toast ── */
+.toast-container {
+  position: fixed;
+  top:      80px; right: 16px;
+  z-index:  999;
+  display:  flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  padding:       10px 16px;
+  border-radius: 8px;
+  border:        1px solid;
+  font-size:     13px;
+  font-family:   var(--font-mono);
+  backdrop-filter: blur(12px);
+  animation:     slideIn 0.25s ease-out;
+  max-width:     320px;
+}
+.toast.success {
+  background:   rgba(53,  208, 127, 0.12);
+  border-color: rgba(53,  208, 127, 0.4);
+  color:        #86EFAC;
+}
+.toast.error {
+  background:   rgba(239, 68,  68,  0.12);
+  border-color: rgba(239, 68,  68,  0.4);
+  color:        #FCA5A5;
+}
+.toast.info {
+  background:   rgba(34,  211, 238, 0.12);
+  border-color: rgba(34,  211, 238, 0.4);
+  color:        #67E8F9;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(120%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Modal backdrop ── */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.modal-box {
+  background:    #0D1520;
+  border:        1px solid var(--border);
+  border-radius: 16px;
+  width:         100%; max-width: 480px;
+  max-height:    90vh;
+  overflow-y:    auto;
+  animation:     slideUp 0.25s ease-out;
+}
+
+/* ── Tx spinner ── */
+.tx-spinner {
+  width: 20px; height: 20px;
+  border:       2px solid rgba(53,208,127,0.2);
+  border-top:   2px solid var(--green);
+  border-radius: 50%;
+  animation:    spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Landing specific ── */
+.landing-hero-text {
+  font-family:  var(--font-title);
+  font-weight:  900;
+  line-height:  0.9;
+  letter-spacing: -0.02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+}
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
+}
