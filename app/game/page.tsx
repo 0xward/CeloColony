@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic'
 'use client'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useAccount }    from 'wagmi'
